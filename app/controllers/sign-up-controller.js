@@ -1,7 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const { registerUser } = require('../db/queries');
 const { body, validationResult } = require('express-validator');
-const bcrypt = require('bcryptjs');
 
 const alphaErr = 'must only contain letters.';
 const lengthErr = 'must be between 3 to 12';
