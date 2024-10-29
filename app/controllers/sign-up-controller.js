@@ -26,7 +26,7 @@ exports.getSignUpForm = asyncHandler(async(req, res) => {
 
 exports.registerUser = [
     validateUser,
-    async(req, res, next) => {
+    asyncHandler(async(req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).render('sign-up-form', { errors: errors.array() });
@@ -43,5 +43,5 @@ exports.registerUser = [
         } catch (err) {
             next(err);
         }
-    }
+    })
 ]

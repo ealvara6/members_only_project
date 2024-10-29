@@ -7,17 +7,16 @@
 </head>
 <body>
     <div>
-        <form action="log-in" method="POST">
+        <% if(locals.user) { %>
             <div>
-                <label for="username">Username: </label>
-                <input type="text" name="username" id="username">
+                You are already logged in
             </div>
             <div>
-                <label for="password">Password: </label>
-                <input type="password" name="password" id="password">
+                return <a href="/">Home</a>
             </div>
-            <button type="submit">Log In</button>
-        </form>
+        <% } else { %>
+            <%- include('partials/log-in-form.ejs') %>
+        <% } %> 
     </div>
 </body>
 </html>

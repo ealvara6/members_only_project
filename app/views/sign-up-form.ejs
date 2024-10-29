@@ -7,30 +7,18 @@
 </head>
 <body>
     <div>
-        <form action="sign-up" method="POST">
-            <%- include('partials/errors.ejs') %>
-            <div>
-                <label for="fname">First Name: </label>
-                <input type="text" name="fname" id="fname">
-            </div>
-            <div>
-                <label for="lname">Last Name: </label>
-                <input type="text" name="lname" id="lname">
-            </div>
-            <div>
-                <label for="username">Username: </label>
-                <input type="text" name="username" id="username">
-            </div>
-            <div>
-                <label for="password">Password: </label>
-                <input type="password" name="password" id="password">
-            </div>
-            <div>
-                <label for="passwordConfirm">Confirm Password: </label>
-                <input type="password" name="passwordConfirm" id="passwordConfirm">
-            </div>
-            <button type="submit">Submit</button>
-        </form>
+        <div>
+            <% if(locals.user) { %>
+                <div>
+                    You are already logged in
+                </div>
+                <div>
+                    return <a href="/">Home</a>
+                </div>
+            <% } else { %>
+                <%- include('partials/sign-up-form.ejs') %>
+            <% } %> 
+        </div>
     </div>
 </body>
 </html>

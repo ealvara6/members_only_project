@@ -7,6 +7,7 @@ require('dotenv').config();
 
 const signUpRouter = require('./routes/sign-up');
 const logInRouter = require('./routes/log-in');
+const joinClubRouter = require('./routes/join-club');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -15,8 +16,14 @@ app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUniniti
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 
+app.use((req, res, next) => {
+    res.locals.user = req.user;
+    next();
+});
+
 app.use('/sign-up', signUpRouter);
 app.use('/log-in', logInRouter);
+app.use('/join-club', joinClubRouter);
 
 app.get('/log-out', (req, res, next) => {
     req.logout((err) => {
@@ -28,7 +35,7 @@ app.get('/log-out', (req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-    res.render('index', { user: req.user });
+    res.render('index');
 });
 
 const PORT = process.env.PORT || 3000;
