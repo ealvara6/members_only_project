@@ -13,7 +13,11 @@ const validateUser = [
     body('username').trim()
     .isLength({ min: 3, max: 12 }).withMessage(`username ${lengthErr}`),
     body('password').trim()
-    .isLength({ min: 3, max: 12 }).withMessage(`password ${lengthErr}`)
+    .isLength({ min: 3, max: 12 }).withMessage(`password ${lengthErr}`),
+    body('passwordConfirm').trim()
+    .custom((value, { req  }) => {
+        return value === req.body.password;
+    }).withMessage('Passwords do not match')
 ];
 
 exports.getSignUpForm = asyncHandler(async(req, res) => {
