@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Member Page</title>
+</head>
+<body>
+    <% if (locals.user && locals.user.membership_status) { %>
+        <div>Welcome to the elite club view!</div>
+    <% } else { %>
+        <div>you are not authorized to view this page.</div>
+    <% } %>
+</body>
+</html>

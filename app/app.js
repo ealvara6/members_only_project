@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const signUpRouter = require('./routes/sign-up');
 const logInRouter = require('./routes/log-in');
-const joinClubRouter = require('./routes/join-club');
+const clubRouter = require('./routes/club');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 
 app.use('/sign-up', signUpRouter);
 app.use('/log-in', logInRouter);
-app.use('/join-club', joinClubRouter);
+app.use('/club', clubRouter);
 
 app.get('/log-out', (req, res, next) => {
     req.logout((err) => {

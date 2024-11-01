@@ -16,3 +16,12 @@ exports.registerUser = asyncHandler(async(req, res) => {
         }
     })
 });
+
+exports.registerMember = asyncHandler(async(req, res) => {
+    try {
+        await pool.query('UPDATE members SET membership_status = true WHERE id = $1', [ req.id ]);
+        return null;
+    } catch(err) {
+        return err
+    }
+})

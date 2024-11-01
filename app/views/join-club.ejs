@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join the Club</title>
+</head>
+<body>
+    <div>
+        <% if (locals.user) { %>
+            <%- include('partials/join-club-form.ejs') %>
+        <% } else { %>
+            <%- include('partials/not-signed-in') %>
+        <% } %>
+    </div>
+</body>
+</html>
