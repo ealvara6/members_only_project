@@ -10,6 +10,8 @@ const logInRouter = require('./routes/log-in');
 const clubRouter = require('./routes/club');
 const postsRouter = require('./routes/posts');
 
+const { getAllPosts } = require('./controllers/posts-controller');
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -36,8 +38,8 @@ app.get('/log-out', (req, res, next) => {
     });
 });
 
-app.get('/', (req, res) => {
-    res.render('index');
+app.get('/', getAllPosts, (req, res) => {
+    res.render('index', { posts: req.posts });
 });
 
 const PORT = process.env.PORT || 3000;

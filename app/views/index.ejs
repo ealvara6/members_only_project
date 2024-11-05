@@ -6,11 +6,41 @@
     <title>Home</title>
 </head>
 <body>
+    <%- include('partials/navbar')  %>
     <% if (locals.user) { %>
         <h1>WELCOME BACK <%= user.username %></h1>
         <a href="/log-out">LOG OUT</a>
     <% } else { %>
         <div>this is the home page</div>
     <% } %>
+    <div>
+        <div>Posts</div>
+        <% posts.map((post) => { %>
+            <div>
+                <div>Title: <%= post.title %> </div>
+            </div>
+            <div>
+                <div>Message: <%= post.message %> </div>
+            </div>
+            <div>
+                <div>date: 
+                    <% if(locals.user && locals.user.membership_status) { %>
+                        <%= post.timestamp %>
+                    <% } else { %>
+                        HIDDEN
+                    <% } %>
+                </div>
+            </div>
+            <div>
+                <div>Author: 
+                    <% if(locals.user && locals.user.membership_status) { %>
+                        <%= post.username %>
+                    <% } else { %>
+                        HIDDEN
+                    <% } %>
+                </div>
+            </div>
+        <% }) %>
+    </div>
 </body>
 </html>

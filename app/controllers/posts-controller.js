@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
-const { registerPost } = require('../db/queries');
+const { registerPost, getAllPosts } = require('../db/queries');
 
 const validatePost = [
     body('title')
@@ -13,7 +13,7 @@ exports.getPostForm = asyncHandler(async(req, res) => {
     res.render('new-post');
 });
 
-exports.postPostForm =[
+exports.postPostForm = [
     validatePost,
     asyncHandler(async(req, res) => {
         const errors = validationResult(req);
@@ -25,6 +25,16 @@ exports.postPostForm =[
         } catch (err) {
             next(err);
         }
-        res.render('new-post');
+        res.render('/');
     })
 ]
+
+exports.getAllPosts = asyncHandler(async(req, res, next) => {
+    try {
+        const posts = await getAllPosts();
+        req.posts = posts;
+        next();
+    } catch (err) {
+        next(err);
+    }
+});

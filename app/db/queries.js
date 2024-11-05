@@ -36,3 +36,13 @@ exports.registerPost = asyncHandler(async(req, res) => {
         return (err);
     }
 });
+
+exports.getAllPosts = asyncHandler(async(req, res) => {
+    try {
+        const { rows } = await pool.query('SELECT posts.title, posts.timestamp, posts.message, members.username FROM posts INNER JOIN members ON posts.author_id = members.id;');
+        console.log(rows);
+        return rows;
+    } catch(err) {
+        return (err);
+    }
+})
