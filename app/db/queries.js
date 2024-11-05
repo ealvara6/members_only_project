@@ -10,7 +10,7 @@ exports.registerUser = asyncHandler(async(req, res) => {
         }
         try {
             await pool.query('INSERT INTO members (first_name, last_name, username, password, membership_status) VALUES ($1, $2, $3, $4, $5)', [ fname, lname, username, hashedPassword, false ]);
-            return null;
+            return;
         } catch(err) {
             return err;
         }
@@ -20,8 +20,19 @@ exports.registerUser = asyncHandler(async(req, res) => {
 exports.registerMember = asyncHandler(async(req, res) => {
     try {
         await pool.query('UPDATE members SET membership_status = true WHERE id = $1', [ req.id ]);
-        return null;
+        return;
     } catch(err) {
         return err
     }
 })
+
+exports.registerPost = asyncHandler(async(req, res) => {
+    const {title, message } = req.body;
+    const { id } = req.user;
+    try {
+        await pool.query('INSERT INTO posts (title, timestamp, message, author_id) values ($1, $2, $3, $4);', [title, new Date(), message, id])
+        return;
+    } catch(err) {
+        return (err);
+    }
+});
