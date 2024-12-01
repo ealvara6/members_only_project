@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
-const { registerPost, getAllPosts } = require('../db/queries');
+const { registerPost, getAllPosts, deletePost } = require('../db/queries');
 
 const validatePost = [
     body('title')
@@ -38,3 +38,13 @@ exports.getAllPosts = asyncHandler(async(req, res, next) => {
         next(err);
     }
 });
+
+exports.deletePost = asyncHandler(async(req, res) => {
+    try {
+        await deletePost(req.params);
+    } catch (err) {
+        return err;
+    }
+    res.redirect('/');
+});
+

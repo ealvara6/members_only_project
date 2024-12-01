@@ -40,6 +40,9 @@
                     <% } %>
                 </div>
             </div>
+            <% if(locals.user && locals.user.admin) { %>
+                <a href='posts/delete-post/<%= post.id %>'>DELETE POST</a>
+            <% } %>
         <% }) %>
     </div>
 </body>

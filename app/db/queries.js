@@ -3,16 +3,16 @@ const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcryptjs');
 
 exports.registerUser = asyncHandler(async(req, res) => {
-    const { fname, lname, username, password } = req;
+    const { fname, lname, username, password, isAdmin, isMember } = req;
     bcrypt.hash(password, 10, async(err, hashedPassword) => {
         if (err) {
-            return err;
+            throw new Error(err);
         }
         try {
-            await pool.query('INSERT INTO members (first_name, last_name, username, password, membership_status) VALUES ($1, $2, $3, $4, $5)', [ fname, lname, username, hashedPassword, false ]);
-            return;
+            const { user } = await pool.query('INSERT INTO members (first_name, last_name, username, password, membership_status, admin) VALUES ($1, $2, $3, $4, $5, $6)', [ fname, lname, username, hashedPassword, isMember, isAdmin ]);
+            return { user: user, err: null};
         } catch(err) {
-            return err;
+            return { user: null, err: err};
         }
     })
 });
@@ -33,16 +33,25 @@ exports.registerPost = asyncHandler(async(req, res) => {
         await pool.query('INSERT INTO posts (title, timestamp, message, author_id) values ($1, $2, $3, $4);', [title, new Date(), message, id])
         return;
     } catch(err) {
-        return (err);
+        return err;
     }
 });
 
 exports.getAllPosts = asyncHandler(async(req, res) => {
     try {
-        const { rows } = await pool.query('SELECT posts.title, posts.timestamp, posts.message, members.username FROM posts INNER JOIN members ON posts.author_id = members.id;');
-        console.log(rows);
+        const { rows } = await pool.query('SELECT posts.id, posts.title, posts.timestamp, posts.message, members.username FROM posts INNER JOIN members ON posts.author_id = members.id;');
         return rows;
     } catch(err) {
-        return (err);
+        return err;
+    }
+})
+
+exports.deletePost = asyncHandler(async(req, res) => {
+    const { id } = req;
+    try {
+        await pool.query('DELETE FROM posts WHERE id = $1', [id]);
+        return;
+    } catch(err) {
+        return err;
     }
 })

@@ -9,7 +9,7 @@
     <% if (locals.user && locals.user.membership_status) { %>
         <div>Welcome to the elite club view!</div>
     <% } else { %>
-        <div>you are not authorized to view this page.</div>
+        <%- include('partials/restricted') %>
     <% } %>
 </body>
 </html>
